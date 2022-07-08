@@ -6,7 +6,7 @@
 int main(){
 
     char name[MAX_LEN]; char new_name[MAX_LEN];
-    char list_names[3][MAX_LEN] = {{"Meith"} , {"IS Pract"} , {"Testing 1"}};
+    char list_names[3][MAX_LEN] = {{"Meith"} , {"IS Pract"} , {"Nishant"}};
     printf("\nENTER NAME : ");
 
 

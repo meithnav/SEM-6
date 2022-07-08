@@ -1,0 +1,25 @@
+create table EmpProf(ID string, AGE string,WORK_HOURS string, SALARY string) row format delimited fields terminated by ',' ;
+
+# Table 2
+create table EmpPersonal (ID string , name string) row format delimited fields terminated by ',' ;
+
+
+LOAD DATA LOCAL INPATH '/home/training/Desktop/meith/employee_data.csv' INTO TABLE EmpProf ;
+
+# IF 2nd time
+LOAD DATA LOCAL INPATH '/home/training/Desktop/meith/employee_data.csv' OVERWRITE INTO TABLE EmpProf ;
+
+SELECT * FROM EmpProf LIMIT 15;
+
+
+# External Table
+
+create external table EmpProfExt(ID string, AGE string,WORK_HOURS string, SALARY string) row format delimited fields terminated by ',' ;
+
+# JOIN
+
+select pro.id , per.name, pro.salary from EmpProf as pro , EmpPersonal as per WHERE pro.id = per.id ; 
+
+
+
+

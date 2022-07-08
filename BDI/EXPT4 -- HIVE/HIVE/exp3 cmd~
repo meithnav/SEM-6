@@ -1,0 +1,76 @@
+**CREATE TABLE**
+create table employeeProf(id int, age int , workhours int , salary int)
+row format delimited fields terminated by ','           
+tblproperties("skip.header.line.count"='1'); 
+
+**LOAD DATA**
+LOAD DATA LOCAL INPATH '/home/training/Desktop/Meith/employee_data.csv'INTO table employeeProf;   
+
+select * from employeeProf LIMIT 15; 
+
+
+CREATE TABLE employees (EMPLOYEE_ID string,FIRST_NAME string,LAST_NAME string,EMAIL string,PHONE_NUMBER string, CATEGORY string)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n';
+      
+LOAD DATA LOCAL INPATH '/home/training/Desktop/Meith/employees.csv' INTO table employees;
+
+
+**STATIC PATITIONING TABLE**
+
+CREATE TABLE empPartition (EMPLOYEE_ID string,FIRST_NAME string,LAST_NAME string,EMAIL string,PHONE_NUMBER string)
+PARTITIONED BY (CATEGORY string)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n';
+
+LOAD DATA 
+LOCAL INPATH '/home/training/Desktop/Meith/employees.csv'
+INTO TABLE empPartition
+PARTITION (CATEGORY = '1'); 
+
+LOAD DATA 
+LOCAL INPATH '/home/training/Desktop/Meith/employees.csv'
+INTO TABLE empPartition
+PARTITION (CATEGORY = '2'); 
+
+LOAD DATA 
+LOCAL INPATH '/home/training/Desktop/Meith/employees.csv'
+INTO TABLE empPartition
+PARTITION (CATEGORY = '3'); 
+
+
+
+
+**DYNAMIC**
+ 
+set hive.exec.dynamic.partition = true ;
+set hive.exec.dynamic.partition.mode = nonstrict;
+
+CREATE TABLE empDynamicPartition (EMPLOYEE_ID   string,FIRST_NAME string,
+LAST_NAME string,EMAIL string,PHONE_NUMBER string)
+PARTITIONED BY (CATEGORY string)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n';
+
+
+INSERT OVERWRITE TABLE empDynamicPartition 
+PARTITION (CATEGORY)
+SELECT * FROM employees;
+
+
+
+**BUCKETING**
+
+set hive.enforce.bucketing =true;
+
+CREATE TABLE emp_Bucket(EMPLOYEE_ID string,FIRST_NAME string,LAST_NAME string,EMAIL string,PHONE_NUMBER string, CATEGORY string)
+CLUSTERED BY(CATEGORY) INTO 3 BUCKETS
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n';
+
+INSERT OVERWRITE TABLE emp_Bucket
+SELECT * FROM employees;

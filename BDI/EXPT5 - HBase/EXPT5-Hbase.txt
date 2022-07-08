@@ -1,0 +1,74 @@
+
+REFER: GURU DOCUMENTATION 
+
+1) start   
+hbase shell
+
+
+2) Create
+Syntax: create <tablename>, <columnfamilyname>
+create 'employee' , 'personalDetails', 'privateDetails'
+
+3) scan 
+ scan 'employee'
+
+4) check for table
+Syntax:list
+list
+
+5) Syntax:describe <table name>
+scan 'employee'
+
+6) Syntax:drop <table name>
+
+7) disable 'employee'
+
+8) Alter
+Syntax: alter <tablename>, NAME=><column familyname>, VERSIONS=>5
+I] Change the max cell number.  
+i) single column family
+alter 'employee', NAME=>'personalDetails', VERSIONS=>5
+
+ii) multiple columns in family
+alter 'employee', 'personalDetails', {NAME => 'guru99_2', IN_MEMORY => true}, {NAME => 'guru99_3', VERSIONS => 5}
+
+II] Update readonly
+alter 'employee', READONLY
+
+III] Delete Col Family
+alter 'employee', 'delete'=>'personalDetails'
+
+9) Insert
+put 'employee' , '1' , 'personalDetails:name' , 'Meith' 
+put 'employee' , '2' , 'personalDetails:name' , 'Mukesh'
+put 'employee' , '3' , 'personalDetails:name' , 'Gautum'
+
+put 'employee' , '1' , 'personalDetails:surname' , 'Navlakha' 
+put 'employee' , '2' , 'personalDetails:surname' , 'Ambani'
+put 'employee' , '3' , 'personalDetails:surname' , 'Adani'
+
+put 'employee' , '1' , 'personalDetails:email' , 'meith@gmail.com' 
+put 'employee' , '2' , 'personalDetails:email' , 'mukhesh@ril.com'
+put 'employee' , '3' , 'personalDetails:email' , 'adani@adani.com'
+
+ 
+10) get data
+get 'employee', '1'
+
+get 'employee', '1' , {COLUMN => 'personalDetails:name'}
+
+11) update
+put 'employee' , '1' , 'personalDetails:email' , 'meith@mn.com'
+
+
+12) Delete
+delete 'employee' , '1' , 'personalDetails:email' 
+
+deleteall 'employee' , '1' 
+
+
+13) Count No. of Rows
+count <'tablename'>, CACHE =>1000
+count 'employee', CACHE =>1000
+
+  
